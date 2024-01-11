@@ -1,12 +1,13 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import { useState } from 'react';
-import Home from './components';
+import Home from './components/Home/Home';
 
 function App() {
 
   const [loggedIn, setLoggedIn] = useState(false)
   const [email, setEmail] = useState("")
+
   return (
     <div className="App">
       <BrowserRouter>

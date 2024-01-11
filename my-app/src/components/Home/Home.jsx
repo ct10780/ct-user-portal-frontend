@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-Home()= (props)=>{
+const Home = (props)=>{
      
     const {loggedIn , email} = props
     const navigate= useNavigate()
@@ -10,4 +10,4 @@ Home()= (props)=>{
     return 
 }
 
-export default Welcome;
+export default Home;
