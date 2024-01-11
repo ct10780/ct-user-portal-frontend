@@ -2,7 +2,7 @@ import './Home.css';
 const Home = (props) => {
 
     const { loggedIn, email } = props
-    
+
     const OnButtonClick = () => {
     }
     return <div className='mainContainer'>
@@ -14,13 +14,13 @@ const Home = (props) => {
             <input className={"button button1"}
                 type="button" onClick={OnButtonClick}
                 value={loggedIn ? "Log Out" : "Log In"} />
-                <div className={'buttonContainer'}>
-            <input className={"button button2"}
-                type="button" onClick={OnButtonClick}
-                value={loggedIn ? "Log Out" : "Register User"} />
-            {(loggedIn ? <div>
-                Your email adress is {email}</div> : <div />)}
-        </div>
+            <div className={'buttonContainer'}>
+                <input className={"button button2"}
+                    type="button" onClick={OnButtonClick}
+                    value={loggedIn ? "Log Out" : "Register User"} />
+                {(loggedIn ? <div>
+                    Your email adress is {email}</div> : <div />)}
+            </div>
         </div>
     </div>
 }
