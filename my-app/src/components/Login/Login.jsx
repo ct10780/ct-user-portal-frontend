@@ -28,7 +28,7 @@ const Login = () => {
                 <input
                     name="password"
                     type="password"
-                    placeholder="search"
+                    placeholder="password"
                     onChange={e => setPassword(e.target.value)}
                 />
                 <input type="submit" value="login" />
