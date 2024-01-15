@@ -24,7 +24,7 @@ function App() {
         <Route path="/register" element={<CustomerRegisteration setUsername={setUsername} setPassword={setPassword} setLoggedIn={setLoggedIn} />} />
         </Routes>
       </BrowserRouter>
-      <Router>
+      {/* <Router>
       <Sidebar />
             <Routes>
                 <Route
@@ -36,7 +36,7 @@ function App() {
                     element={<ModifyCustomerDetails />}
                 />
                 </Routes>
-      </Router>
+      </Router> */}
     </div>
   );
 }
