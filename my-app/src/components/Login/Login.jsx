@@ -9,11 +9,9 @@ const Login = () => {
     const submitForm = e => {
         e.preventDefault();
 
-        PostData(username, password).then(result => {
+       PostData(username, password).then(result => {
             console.log(result);
         });
-        console.log("username", username);
-        console.log("password", password);
     };
     return (
 
@@ -38,9 +36,11 @@ const Login = () => {
 }
 export default Login;
 
-export function PostData(userData) {
+export function PostData(username, password) {
+    
     let BaseUrl = "http://localhost:8080/users/signin";
-    console.log("userData", userData);
+    BaseUrl.searchParams.append('username',username)
+    BaseUrl.searchParams.append('password',password)
     return new Promise((resolve, reject) => {
         fetch(BaseUrl, {
             method: "POST",
@@ -48,7 +48,6 @@ export function PostData(userData) {
                 "Content-Type": "application/json",
                 Accept: "application/json"
             }
-            // body: JSON.stringify(userData)
         })
             .then(response => response.json())
             .then(responseJson => {
