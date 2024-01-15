@@ -41,8 +41,8 @@ export function PostData(userData) {
     let BaseUrl = "http://localhost:8080/users/signin";
     console.log("userData", userData);
     var details = {
-        'username': userData.username,
-        'password': userData.password
+        'username': "admin",
+        'password': "admin"
     };
     
     var formBody = [];
