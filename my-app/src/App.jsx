@@ -20,7 +20,7 @@ function App() {
       <BrowserRouter>
         <Routes>
         <Route path="/" element={<Home/>} />
-        <Route path="/login" element={<Login setUsername={setUsername} setLoggedIn={setLoggedIn} />} />
+        <Route path="/login" element={<Login setUsername={props.setUsername} setLoggedIn={props.setLoggedIn} />} />
         <Route path="/register" element={<CustomerRegisteration setUsername={setUsername} setPassword={setPassword} setLoggedIn={setLoggedIn} />} />
         </Routes>
       </BrowserRouter>
