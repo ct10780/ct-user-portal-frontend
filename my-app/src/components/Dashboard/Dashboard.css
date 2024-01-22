@@ -1,0 +1,37 @@
+.dashboard-container {
+    display: flex;
+}
+
+.drawer {
+    width: 0;
+    height: 100%;
+    background-color: #333;
+    color: #fff;
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
+.drawer.open {
+    width: 300px;
+}
+
+.drawer ul {
+    list-style-type: none;
+    padding: 20px;
+}
+
+.drawer li {
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+.content {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.toggle-button {
+    margin: 10px;
+    padding: 10px;
+    cursor: pointer;
+}
