@@ -1,14 +1,20 @@
 import { useNavigate } from 'react-router-dom';
 import './Home.css';
+import Dashboard from '../Dashboard/Dashboard';
 const Home = (props) => {
 
-    const navigate = useNavigate("");
-    const { loggedIn, email } = props
+    const isLoggedIn = localStorage.getItem('LOGGEDIN_USER')
 
+    return isLoggedIn ? <Dashboard /> : <NonLoggedInPage />
+}
+
+const NonLoggedInPage = () => {
+    const navigate = useNavigate()
     const OnButtonClick = () => {
         navigate('/login')
     }
-    const OnButtonClick2 = () => {
+
+    const OnRegisterButtonClick = () => {
         navigate('/register')
     }
     return <div className='mainContainer'>
@@ -19,13 +25,11 @@ const Home = (props) => {
         <div className={'buttonContainer'}>
             <input className={"button button1"}
                 type="button" onClick={OnButtonClick}
-                value={loggedIn ? "Log Out" : "Log In"} />
+                value={"Log In"} />
             <div className={'buttonContainer'}>
                 <input className={"button button2"}
-                    type="button" onClick={OnButtonClick2}
-                    value={loggedIn ? "Log Out" : "Register User"} />
-                {(loggedIn ? <div>
-                    Your email adress is {email}</div> : <div />)}
+                    type="button" onClick={OnRegisterButtonClick}
+                    value={"Register User"} />
             </div>
         </div>
     </div>

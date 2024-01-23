@@ -1,74 +1,62 @@
-import { useState } from 'react';
-import './Login.css'
-//import { useNavigate } from 'react-router-dom';
-
+import React, { useState } from 'react';
+import './Login.css';
+import { useNavigate } from 'react-router-dom';
+ 
 const Login = () => {
-    const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
-
-    const submitForm = e => {
-        e.preventDefault();
-        PostData(username, password).then(result => {
-            console.log(result);
-        });
-        console.log("username", username);
-        console.log("password", password);
-    };
-    return (
-
-        <div className="search_box">
-            <form onSubmit={submitForm}>
-                <input
-                    name="name"
-                    type="text"
-                    placeholder="username"
-                    onChange={e => setUsername(e.target.value)}
-                />
-                <input
-                    name="password"
-                    type="password"
-                    placeholder="search"
-                    onChange={e => setPassword(e.target.value)}
-                />
-                <input type="submit" value="login" />
-            </form>
-        </div>
-    );
-}
-export default Login;
-
-export function PostData(userData) {
-    let BaseUrl = "http://localhost:8080/users/signin";
-    console.log("userData", userData);
-    var details = {
-        'username': "admin",
-        'password': "admin"
-    };
-    
-    var formBody = [];
-    for (var property in details) {
-      var encodedKey = encodeURIComponent(property);
-      var encodedValue = encodeURIComponent(details[property]);
-      formBody.push(encodedKey + "=" + encodedValue);
-    }
-    formBody = formBody.join("&");
-    console.log(formBody)
-    return new Promise((resolve, reject) => {
-        fetch(BaseUrl, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                Accept: "*/*"
-            },
-            body: formBody
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+ 
+  const handleLogin = () => {
+    // For simplicity, let's assume the login is successful if both fields are filled
+    if (username && password) {
+        let loginList =[]
+        try {
+            loginList = JSON.parse(localStorage.getItem('REGISTER_LIST'));
+        } catch (error) {
+            
+        }
+       const loggedIn = loginList?.filter(log =>{
+            return log.username ===username && log.password === password
         })
-            .then(response => response.json())
-            .then(responseJson => {
-                resolve(responseJson);
-            })
-            .catch(error => {
-                reject(error);
-            });
-    });
-}
-
+        if(loggedIn?.length>0){
+            const data =loggedIn[0].username
+            localStorage.setItem('LOGGEDIN_USER',data);
+            navigate('/')
+        } else {
+            alert('Wrong Username or Password')
+        }
+    } else {
+      alert('Please enter both username and password');
+    }
+  };
+ 
+  return (
+    <div className="login-container">
+      <h2>Login</h2>
+      <form>
+        <label>
+          Username:
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </label>
+        <label>
+          Password:
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </label>
+        <button type="button" onClick={handleLogin}>
+          Login
+        </button>
+      </form>
+    </div>
+  );
+};
+ 
+export default Login;

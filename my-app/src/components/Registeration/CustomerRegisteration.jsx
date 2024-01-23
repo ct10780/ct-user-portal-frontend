@@ -1,88 +1,96 @@
 import React, { useState } from 'react';
-
-
-const CustomerRegisteration = () => {
-
-    const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
-    const [reEnterPassword, setReEnterPassword] = useState("")
-    const [role, setRole] = useState("")
-    const [companyName, setCompanyName] = useState("")
-    const [usernameError, setUsernameError] = useState("")
-    const [passwordError, setPasswordError] = useState("")
-    const [reEnterPasswordError, setReEnterPasswordError] = useState("")
-    const [roleError, setRoleError] = useState("")
-    const [companyNameError, setCompanyNameError] = useState("")
-
-    const onButtonClick = (data) => {
-        setPasswordError("")
-        setUsernameError("")
-        setRoleError("")
-        setCompanyNameError("")
-
-        if (username === "" || password === "") {
-            setUsernameError("Please enter values  correctly")
-            return;
-        }
-        if (password.length < 14) {
-            setPasswordError("please enter password with minimum lengh 14")
-            return
-        }
-        if (password.length !== reEnterPassword.length) {
-            setReEnterPasswordError("please enter correct password")
-            return
-        }
-        if (role === "") {
-            setRoleError("please assign role")
-            return
-        }
-        if (companyName === "") {
-            setCompanyNameError("please enter company name")
-            return
-        }
+import './CustomerRegisteration.css';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+ 
+const CustomerRegisteration = ({ onRegister , feRole}) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [role, setRole] = useState('');
+    const navigate = useNavigate();
+ 
+  const handleRegister = () => {
+    // For simplicity, let's assume the registration is successful if all fields are filled
+    if (username && password && role) {
+     let obj ={ username,password, role };
+     const list = localStorage.getItem("REGISTER_LIST");
+ 
+     if(feRole ==='UPDATE'){
+        const username = localStorage.getItem("LOGGEDIN_USER");
+        const parsedList = JSON.parse(list);
+        const newList = parsedList.filter(e=>e.username !== username)
+        newList.push(obj);
+        localStorage.setItem("REGISTER_LIST",JSON.stringify(newList));
+         localStorage.removeItem("LOGGEDIN_USER");
+         navigate('/login')
+        return
+     }
+ 
+ 
+ 
+      if(list){
+            const parsedList = JSON.parse(list);
+            parsedList.push(obj)
+            localStorage.setItem("REGISTER_LIST",JSON.stringify(parsedList));
+      } else {
+        let objList = [obj];
+        localStorage.setItem("REGISTER_LIST",JSON.stringify(objList));
+      }
+      navigate('/login')
+    } else {
+      alert('Please fill in all fields');
     }
-    return <div className="mainContainer">
-        <div className='titleContainer'>
-            <div> <h2>Register User</h2>
-            </div>
-            <div className='inputContainer'>
-                <input value={username} placeholder='Enter username here' onChange={ev => setUsername(ev.target.value)}
-                    className={"inputBox"}>
-                </input>
-                <label className='errorlabel'>{setUsernameError}</label>
-            </div><br></br>
-            <div className='inputContainer'>
-                <input value={password} placeholder='Enter password here' onChange={ev => setPassword(ev.target.value)}
-                    className={"inputBox"}>
-                </input>
-                <label className='errorlabel'>{setPasswordError}</label><br />
-                <div className='inputContainer'>
-                    <input value={companyName} placeholder='Enter company name here' onChange={ev => setCompanyName(ev.target.value)}
-                        className={"inputBox"}>
-                    </input>
-                    <label className='errorlabel'>{setCompanyNameError}</label><br />
-                    <div className='inputContainer'>
-                        <input value={password} placeholder='Re-enter password here' onChange={ev => setReEnterPassword(ev.target.value)}
-                            className={"inputBox"}>
-                        </input>
-                        <label className='errorlabel'>{setReEnterPasswordError}</label><br />
-                        <div className='inputContainer'>
-                            <label for="roles">Choose a role:</label>
-                            <select name="roles" id="roles">
-                                <option value="Admin">Admin</option>
-                                <option value="User">User</option>
-                            </select>
-                            <label className='errorlabel'>{setRoleError}</label><br />
-                            <div className='inputContainer'>
-                                <input type="button" className="button button1" onClick={onButtonClick} value={"Register"}>
-                                </input>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  };
+ 
+  useEffect(()=>{
+ 
+    if(feRole === 'UPDATE'){
+ 
+        const userloggedIn = localStorage.getItem('LOGGEDIN_USER');
+        const registedUser = JSON.parse(localStorage.getItem('REGISTER_LIST'));
+        const user = registedUser?.filter(e=> e.username === userloggedIn)?.[0]
+ 
+        setUsername(user?.username)
+        setPassword(user?.password)
+        setRole(user.role)
+    }
+  },[feRole])
+ 
+  return (
+    <div className="register-container">
+      <h2>Customer Registeration</h2>
+      <form>
+        <label>
+          Username:
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </label>
+        <label>
+          Password:
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </label>
+        <label>
+          Role:
+          <select value={role} onChange={(e) => setRole(e.target.value)}>
+            <option value="">Select Role</option>
+            <option value="customer">User</option>
+            <option value="admin">Admin</option>
+          </select>
+        </label>
+        <button type="button" onClick={handleRegister}>
+          Register
+        </button>
+      </form>
     </div>
-}
+  );
+};
+ 
 
 export default CustomerRegisteration;

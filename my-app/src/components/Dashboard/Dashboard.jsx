@@ -1,14 +1,11 @@
 import { useState } from "react"
 import './Dashboard.css'
-import users from "../../JSONData/users";
 import CustomerRegisteration from "../Registeration/CustomerRegisteration";
-import { useNavigate } from 'react-router-dom'
 
 
 const Dashboard = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [menuOption, setmenuOption] = useState(false);
-    const navigate = useNavigate()
 
     const toggleDrawer = () => {
         setIsDrawerOpen(!isDrawerOpen);
@@ -39,14 +36,14 @@ const Dashboard = () => {
                 }}>Logout</button>
                 <h2>Welcome {loggedInUser}</h2>
                 {menuOption === 'UserList' && <RenderUserList />}
-                {menuOption === 'Modify User' && <Register feRole={'UPDATE'} />}
+                {menuOption === 'Modify User' && <CustomerRegisteration feRole={'UPDATE'} />}
  
             </div>
         </div>
     );
 }
 
-const RenderList =()=>{
+const RenderUserList =()=>{
     const list=JSON.parse(localStorage.getItem('REGISTER_LIST'));
     return <>{list?.map((dataObj)=><li>{dataObj.username}</li>)}</>
 }
