@@ -7,23 +7,28 @@ import CustomerRegisteration from './components/Registeration/CustomerRegisterat
 import ModifyCustomerDetails from './components/LandingPageMenu/ModifyCustomerDetails';
 import CustomerDetails from './components/LandingPageMenu/CustomerDetails';
 import Sidebar from './components/Sidebar/Sidebar';
+import Counter from './components/react/Counter';
 
+import CounterOne from './components/react/CounterOne';
+import CounterTwo from './components/react/CounterTwo';
+import CtLogin from './components/ctlogin/ctlogin.jsx';
 function App() {
 
   const [loggedIn, setLoggedIn] = useState(false)
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [role, setRole] = useState("")
+  
 
   return (
     <div className="App">
-      <BrowserRouter>
+      {/* <BrowserRouter>
         <Routes>
         <Route path="/" element={<Home/>} />
         <Route path="/login" element={<Login setUsername={setUsername} setLoggedIn={setLoggedIn} />} />
         <Route path="/register" element={<CustomerRegisteration setUsername={setUsername} setPassword={setPassword} setLoggedIn={setLoggedIn} />} />
         </Routes>
-      </BrowserRouter>
+      </BrowserRouter> */}
       {/* <Router>
       <Sidebar />
             <Routes>
@@ -37,6 +42,13 @@ function App() {
                 />
                 </Routes>
       </Router> */}
+      {/* <Counter></Counter>
+       */}
+
+       {/* {<CounterOne></CounterOne>} */}
+       {/* <CounterTwo></CounterTwo> */}
+       <CtLogin></CtLogin>
+
     </div>
   );
 }
